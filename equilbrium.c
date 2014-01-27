@@ -52,7 +52,7 @@ double component_cosines(double mag, double angle)
 	return mag * cos(deg_rad(angle));
 }
 
-/* returns the magnitude of a vector (pythagorean theorem */
+/* returns the magnitude of a vector (pythagorean theorem) */
 
 double magnitude_mag(double i, double j, double k)
 {
@@ -105,9 +105,9 @@ void get_three_dimensional_vector(double *i1, double *i2, double *j1, double *j2
 		case 1:
 			puts("Enter i component:");
 			scanf("%lf", i1);
-			puts("Enter j components:");
+			puts("Enter j component:");
 			scanf("%lf", j1);
-			puts("Enter k components:");
+			puts("Enter k component:");
 			scanf("%lf", k1);
 			break;
 		case 2:
@@ -152,9 +152,9 @@ void get_three_dimensional_vector(double *i1, double *i2, double *j1, double *j2
 		case 1:
 			puts("Enter i component:");
 			scanf("%lf", i2);
-			puts("Enter j components:");
+			puts("Enter j component:");
 			scanf("%lf", j2);
-			puts("Enter k components:");
+			puts("Enter k component:");
 			scanf("%lf", k2);
 			break;
 		case 2:
@@ -180,6 +180,107 @@ void get_three_dimensional_vector(double *i1, double *i2, double *j1, double *j2
 			*i2 = component_cosines(mag, angle_x);
 			*j2 = component_cosines(mag, angle_y);
 			*k2 = component_cosines(mag, angle_z);
+			break;
+		default:
+			puts("Try again.");
+			condition = 1;
+			break;
+		}
+	} while (condition != 0);
+}
+
+void get_three_dimensional_force_vector(double *x1, double *x2, double *y1, double *y2, 
+	double *z1, double *z2)
+{
+	int input, condition;
+	double mag, angle_hor, angle_vert, angle_x, angle_y, angle_z;
+	
+	do {
+		printf("Point 1:\n1 - Enter coordinates" 
+		"\n2 - Enter magnitude and the horizontal & vertical angles"
+		"\n3 - Enter magnitude and the directional cosines"
+		"\n");
+		scanf("%d", &input);
+		condition = 0;
+		switch (input){
+		case 1:
+			puts("Enter x coordinate:");
+			scanf("%lf", x1);
+			puts("Enter y coordinate:");
+			scanf("%lf", y1);
+			puts("Enter z coordinate:");
+			scanf("%lf", z1);
+			break;
+		case 2:
+			puts("Enter magnitude:");
+			scanf("%lf", &mag);
+			puts("Enter horizontal angle in degrees:");
+			scanf("%lf", &angle_hor);
+			puts("Enter vertical angle in degrees:");
+			scanf("%lf", &angle_vert);
+			*x1 = x_component_3D_2angles(mag, angle_hor, angle_vert);
+			*y1 = y_component_3D_2angles(mag, angle_hor, angle_vert);
+			*z1 = z_component_3D_2angles(mag, angle_vert);
+			break;
+		case 3:
+			puts("Enter the magnitude:");
+			scanf("%lf", &mag);
+			puts("Enter the angle from the x axis:");
+			scanf("%lf", &angle_x);
+			puts("Enter the angle from the y axis:");
+			scanf("%lf", &angle_y);
+			puts("Enter the angle from the z axis:");
+			scanf("%lf", &angle_z);
+			*x1 = component_cosines(mag, angle_x);
+			*y1 = component_cosines(mag, angle_y);
+			*z1 = component_cosines(mag, angle_z);
+			break;
+		default:
+			puts("Try again.");
+			condition = 1;
+			break;
+		}
+	} while (condition != 0);
+	
+	do {
+		printf("Point 2:\n1 - Enter coordinates" 
+		"\n2 - Enter magnitude and the horizontal & vertical angles"
+		"\n3 - Enter magnitude and the directional cosines"
+		"\n");
+		scanf("%d", &input);
+		condition = 0;
+		switch (input){
+		case 1:
+			puts("Enter x coordinate:");
+			scanf("%lf", x2);
+			puts("Enter y coordinate:");
+			scanf("%lf", y2);
+			puts("Enter z coordinate:");
+			scanf("%lf", z2);
+			break;
+		case 2:
+			puts("Enter magnitude:");
+			scanf("%lf", &mag);
+			puts("Enter horizontal angle in degrees:");
+			scanf("%lf", &angle_hor);
+			puts("Enter vertical angle in degrees:");
+			scanf("%lf", &angle_vert);
+			*x2 = x_component_3D_2angles(mag, angle_hor, angle_vert);
+			*y2 = y_component_3D_2angles(mag, angle_hor, angle_vert);
+			*z2 = z_component_3D_2angles(mag, angle_vert);
+			break;
+		case 3:
+			puts("Enter the magnitude:");
+			scanf("%lf", &mag);
+			puts("Enter the angle from the x axis:");
+			scanf("%lf", &angle_x);
+			puts("Enter the angle from the y axis:");
+			scanf("%lf", &angle_y);
+			puts("Enter the angle from the z axis:");
+			scanf("%lf", &angle_z);
+			*x2 = component_cosines(mag, angle_x);
+			*y2 = component_cosines(mag, angle_y);
+			*z2 = component_cosines(mag, angle_z);
 			break;
 		default:
 			puts("Try again.");
@@ -398,6 +499,109 @@ void vector_operations(void)
 	}while (condition != 0);
 }
 
+/* Calculates and outputs the force along a line. */
+
+void force_along_line(void)
+{
+	double x1, x2, y1, y2, z1, z2, force;
+
+	double *X1, *X2, *Y1, *Y2, *Z1, *Z2;
+	
+	X1 = &x1;
+	X2 = &x2;
+	Y1 = &y1;
+	Y2 = &y2;
+	Z1 = &z1;
+	Z2 = &z2;
+	
+	puts("Enter the magnitude of the Force:");
+	scanf("%lf", &force);
+	
+	get_three_dimensional_force_vector(X1, X2, Y1, Y2, Z1, Z2);
+	
+	double total_x = x2 - x1;
+	double total_y = y2 - y1;
+	double total_z = z2 - z1;
+	
+	double mag = magnitude_mag(total_x, total_y, total_z);
+	
+	double x = total_x / mag;
+	double y = total_y / mag;
+	double z = total_z / mag;
+	
+	double force_x = force * x;
+	double force_y = force * y;
+	double force_z = force * z;
+	
+	output_result_vector(force_x, force_y, force_z);
+}
+
+/* 
+ * Calculates the total net forces at equilibrium and determines the Tensions in the
+ * remaining cords.
+ */
+ 
+void equilibrium(void)
+{
+	double mag, angle1, angle2, tension1, tension2;
+	
+	puts("Enter the total force the system holds:");
+	scanf("%lf", &mag);
+	puts("Enter the acute angle from the horizontal to the first supporting force:");
+	scanf("%lf", &angle1);
+	puts("Enter the acute angle from the horizontal to the second supporting force:");
+	scanf("%lf", &angle2);
+	
+	tension1 = mag / (((cos(deg_rad(angle1)) * sin(deg_rad(angle2))) / 
+		cos(deg_rad(angle2))) + sin(deg_rad(angle1)));
+	
+	double x1 = tension1 * cos(deg_rad(angle1));
+	double y1 = tension1 * sin(deg_rad(angle1));
+	
+	tension2 = tension1 * cos(deg_rad(angle1)) / cos(deg_rad(angle2));
+	
+	double x2 = tension2 * cos(deg_rad(angle1));
+	double y2 = tension2 * sin(deg_rad(angle2));
+	
+	printf("Force 1: %.2f  %.2f degrees from horizontal or %.2f i + %.2f j\n", 
+		tension1, angle1, x1, y1);
+	printf("Force 2: %.2f  %.2f degrees from horizontal or %.2f i + %.2f j\n",
+		tension2, angle2, x2, y2);
+	
+}
+
+/*
+ * Gives and calls the force operations currently supported.
+ */
+ 
+void force_operations(void)
+{
+	int input, condition;
+	
+	do {
+		printf("What would you like to do?"
+		"\n1 - Force along a line"
+		"\n2 - Forces at Equilibrium"
+		"\n");
+		scanf("%d", &input);
+		
+		condition = 0;
+		
+		switch (input){
+		case 1:
+			force_along_line();
+			break;
+		case 2:
+			equilibrium();
+			break;
+		default:
+			puts("Try again.");
+			condition = 1;
+			break;
+		}
+	}while (condition != 0);
+}
+
 /*
  * Asks what type of operation you would like to do and calls the appropriate function.
  */
@@ -408,6 +612,7 @@ int main(void){
 	do {
 		printf("What would you like to do?"
 			"\n1 - Vector Calculations"
+			"\n2 - Force Calculations"
 			"\n");
 		scanf("%d", &input);
 		
@@ -416,6 +621,9 @@ int main(void){
 		switch (input){
 		case 1:
 			vector_operations();
+			break;
+		case 2:
+			force_operations();
 			break;
 		default:
 			puts("Try again.");
@@ -427,19 +635,4 @@ int main(void){
 
 	return EXIT_SUCCESS;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
