@@ -14,6 +14,19 @@ double rad_deg(double rad)
 	return rad * 180.0 / M_PI;
 }
 
+/* Sums up all the values in an array */
+
+double array_sum(double x[], int num)
+{
+	double sum = 0;
+	for (int count = 0; count < num; count++){
+		sum = sum + x[count];
+	}
+	
+	return sum;
+	
+}
+
 /* 
  * The next 5 functions return the x, y, or z components of a vector in either
  * a 2 dimensional or 3 dimensional space
@@ -84,55 +97,34 @@ double horizontal_angle(double mag, double ax, double angle)
 }
 
 /*
- * Requests the input for 2 3 dimensional vectors and stores the values in the variable
+ * Requests the input for a 2 dimensional vector and stores the values in the variable
  * that the pointer refers to.
  */
 
-void get_three_dimensional_vector(double *i1, double *i2, double *j1, double *j2, 
-	double *k1, double *k2)
+void get_two_dimensional_vector(double *i, double *j, int vector_num)
 {
 	int input, condition;
-	double mag, angle_hor, angle_vert, angle_x, angle_y, angle_z;
+	double mag, angle;
 	
 	do {
-		printf("Vector 1:\n1 - Enter Components" 
-		"\n2 - Enter magnitude and the horizontal & vertical angles"
-		"\n3 - Enter magnitude and the directional cosines"
-		"\n");
+		printf("Vector %d:\n1 - Enter Components" 
+		"\n2 - Enter magnitude and the angle above the horizontal\n", vector_num);
 		scanf("%d", &input);
 		condition = 0;
 		switch (input){
 		case 1:
 			puts("Enter i component:");
-			scanf("%lf", i1);
+			scanf("%lf", i);
 			puts("Enter j component:");
-			scanf("%lf", j1);
-			puts("Enter k component:");
-			scanf("%lf", k1);
+			scanf("%lf", j);
 			break;
 		case 2:
 			puts("Enter magnitude:");
 			scanf("%lf", &mag);
 			puts("Enter horizontal angle in degrees:");
-			scanf("%lf", &angle_hor);
-			puts("Enter vertical angle in degrees:");
-			scanf("%lf", &angle_vert);
-			*i1 = x_component_3D_2angles(mag, angle_hor, angle_vert);
-			*j1 = y_component_3D_2angles(mag, angle_hor, angle_vert);
-			*k1 = z_component_3D_2angles(mag, angle_vert);
-			break;
-		case 3:
-			puts("Enter the magnitude:");
-			scanf("%lf", &mag);
-			puts("Enter the angle from the x axis:");
-			scanf("%lf", &angle_x);
-			puts("Enter the angle from the y axis:");
-			scanf("%lf", &angle_y);
-			puts("Enter the angle from the z axis:");
-			scanf("%lf", &angle_z);
-			*i1 = component_cosines(mag, angle_x);
-			*j1 = component_cosines(mag, angle_y);
-			*k1 = component_cosines(mag, angle_z);
+			scanf("%lf", &angle);
+			*i = x_component_2D(mag, angle);
+			*j = y_component_2D(mag, angle);
 			break;
 		default:
 			puts("Try again.");
@@ -141,75 +133,33 @@ void get_three_dimensional_vector(double *i1, double *i2, double *j1, double *j2
 		}
 	} while (condition != 0);
 	
-	do {
-		printf("Vector 2:\n1 - Enter Components"
-		"\n2 - Enter magnitude and the horizontal & vertical angles"
-		"\n3 - Enter magnitude and the directional cosines"
-		"\n");
-		scanf("%d", &input);
-		condition = 0;
-		switch (input){
-		case 1:
-			puts("Enter i component:");
-			scanf("%lf", i2);
-			puts("Enter j component:");
-			scanf("%lf", j2);
-			puts("Enter k component:");
-			scanf("%lf", k2);
-			break;
-		case 2:
-			puts("Enter magnitude:");
-			scanf("%lf", &mag);
-			puts("Enter horizontal angle in degrees:");
-			scanf("%lf", &angle_hor);
-			puts("Enter vertical angle in degrees:");
-			scanf("%lf", &angle_vert);
-			*i2 = x_component_3D_2angles(mag, angle_hor, angle_vert);
-			*j2 = y_component_3D_2angles(mag, angle_hor, angle_vert);
-			*k2 = z_component_3D_2angles(mag, angle_vert);
-			break;
-		case 3:
-			puts("Enter the magnitude:");
-			scanf("%lf", &mag);
-			puts("Enter the angle from the x axis:");
-			scanf("%lf", &angle_x);
-			puts("Enter the angle from the y axis:");
-			scanf("%lf", &angle_y);
-			puts("Enter the angle from the z axis:");
-			scanf("%lf", &angle_z);
-			*i2 = component_cosines(mag, angle_x);
-			*j2 = component_cosines(mag, angle_y);
-			*k2 = component_cosines(mag, angle_z);
-			break;
-		default:
-			puts("Try again.");
-			condition = 1;
-			break;
-		}
-	} while (condition != 0);
 }
 
-void get_three_dimensional_force_vector(double *x1, double *x2, double *y1, double *y2, 
-	double *z1, double *z2)
+/*
+ * Requests the input for a 3 dimensional vectors and stores the values in the variable
+ * that the pointer refers to.
+ */
+
+void get_three_dimensional_vector(double *i, double *j,	double *k, int vector_num)
 {
 	int input, condition;
 	double mag, angle_hor, angle_vert, angle_x, angle_y, angle_z;
 	
 	do {
-		printf("Point 1:\n1 - Enter coordinates" 
+		printf("Vector %d:\n1 - Enter Components" 
 		"\n2 - Enter magnitude and the horizontal & vertical angles"
 		"\n3 - Enter magnitude and the directional cosines"
-		"\n");
+		"\n", vector_num);
 		scanf("%d", &input);
 		condition = 0;
 		switch (input){
 		case 1:
-			puts("Enter x coordinate:");
-			scanf("%lf", x1);
-			puts("Enter y coordinate:");
-			scanf("%lf", y1);
-			puts("Enter z coordinate:");
-			scanf("%lf", z1);
+			puts("Enter i component:");
+			scanf("%lf", i);
+			puts("Enter j component:");
+			scanf("%lf", j);
+			puts("Enter k component:");
+			scanf("%lf", k);
 			break;
 		case 2:
 			puts("Enter magnitude:");
@@ -218,9 +168,9 @@ void get_three_dimensional_force_vector(double *x1, double *x2, double *y1, doub
 			scanf("%lf", &angle_hor);
 			puts("Enter vertical angle in degrees:");
 			scanf("%lf", &angle_vert);
-			*x1 = x_component_3D_2angles(mag, angle_hor, angle_vert);
-			*y1 = y_component_3D_2angles(mag, angle_hor, angle_vert);
-			*z1 = z_component_3D_2angles(mag, angle_vert);
+			*i = x_component_3D_2angles(mag, angle_hor, angle_vert);
+			*j = y_component_3D_2angles(mag, angle_hor, angle_vert);
+			*k = z_component_3D_2angles(mag, angle_vert);
 			break;
 		case 3:
 			puts("Enter the magnitude:");
@@ -231,9 +181,9 @@ void get_three_dimensional_force_vector(double *x1, double *x2, double *y1, doub
 			scanf("%lf", &angle_y);
 			puts("Enter the angle from the z axis:");
 			scanf("%lf", &angle_z);
-			*x1 = component_cosines(mag, angle_x);
-			*y1 = component_cosines(mag, angle_y);
-			*z1 = component_cosines(mag, angle_z);
+			*i = component_cosines(mag, angle_x);
+			*j = component_cosines(mag, angle_y);
+			*k = component_cosines(mag, angle_z);
 			break;
 		default:
 			puts("Try again.");
@@ -242,21 +192,33 @@ void get_three_dimensional_force_vector(double *x1, double *x2, double *y1, doub
 		}
 	} while (condition != 0);
 	
+}
+
+/*
+ * Requests the input for a 3 dimensional coordinate and stores the values in the 
+ * variable that the pointer refers to.
+ */
+
+void get_three_dimensional_coordinate(double *x, double *y, double *z, int point)
+{
+	int input, condition;
+	double mag, angle_hor, angle_vert, angle_x, angle_y, angle_z;
+	
 	do {
-		printf("Point 2:\n1 - Enter coordinates" 
+		printf("Point %d:\n1 - Enter coordinates" 
 		"\n2 - Enter magnitude and the horizontal & vertical angles"
 		"\n3 - Enter magnitude and the directional cosines"
-		"\n");
+		"\n", point);
 		scanf("%d", &input);
 		condition = 0;
 		switch (input){
 		case 1:
 			puts("Enter x coordinate:");
-			scanf("%lf", x2);
+			scanf("%lf", x);
 			puts("Enter y coordinate:");
-			scanf("%lf", y2);
+			scanf("%lf", y);
 			puts("Enter z coordinate:");
-			scanf("%lf", z2);
+			scanf("%lf", z);
 			break;
 		case 2:
 			puts("Enter magnitude:");
@@ -265,9 +227,9 @@ void get_three_dimensional_force_vector(double *x1, double *x2, double *y1, doub
 			scanf("%lf", &angle_hor);
 			puts("Enter vertical angle in degrees:");
 			scanf("%lf", &angle_vert);
-			*x2 = x_component_3D_2angles(mag, angle_hor, angle_vert);
-			*y2 = y_component_3D_2angles(mag, angle_hor, angle_vert);
-			*z2 = z_component_3D_2angles(mag, angle_vert);
+			*x = x_component_3D_2angles(mag, angle_hor, angle_vert);
+			*y = y_component_3D_2angles(mag, angle_hor, angle_vert);
+			*z = z_component_3D_2angles(mag, angle_vert);
 			break;
 		case 3:
 			puts("Enter the magnitude:");
@@ -278,9 +240,9 @@ void get_three_dimensional_force_vector(double *x1, double *x2, double *y1, doub
 			scanf("%lf", &angle_y);
 			puts("Enter the angle from the z axis:");
 			scanf("%lf", &angle_z);
-			*x2 = component_cosines(mag, angle_x);
-			*y2 = component_cosines(mag, angle_y);
-			*z2 = component_cosines(mag, angle_z);
+			*x = component_cosines(mag, angle_x);
+			*y = component_cosines(mag, angle_y);
+			*z = component_cosines(mag, angle_z);
 			break;
 		default:
 			puts("Try again.");
@@ -288,6 +250,7 @@ void get_three_dimensional_force_vector(double *x1, double *x2, double *y1, doub
 			break;
 		}
 	} while (condition != 0);
+	
 }
 
 /*
@@ -318,68 +281,33 @@ void output_result_vector(double i, double j, double k)
 
 void two_dimensional_vector_addition(void)
 {
-	int input, condition;
-	double i1, i2, j1, j2, mag1, mag2,  angle1, angle2;
+
+	int num_of_vectors;
+
+	double *I, *J;
 	
+	puts("How many vectors are there?");
 	do {
-		printf("Vector 1:\n1 - Enter Components \n2 - Enter magnitude & angle\n");
-		scanf("%d", &input);
-		condition = 0;
-		switch (input){
-		case 1:
-			puts("Enter i component:");
-			scanf("%lf", &i1);
-			puts("Enter j components:");
-			scanf("%lf", &j1);
-			break;
-		case 2:
-			puts("Enter magnitude:");
-			scanf("%lf", &mag1);
-			puts("Enter Angle in degrees:");
-			scanf("%lf", &angle1);
-			i1 = x_component_2D(mag1, angle1);
-			j1 = y_component_2D(mag1, angle1);
-			break;
-		default:
-			puts("Try again.");
-			condition = 1;
-			break;
-		}
-	} while (condition != 0);
-
-	do {
-		printf("Vector 2:\n1 - Enter Components \n2 - Enter magnitude & angle\n");
-		scanf("%d", &input);
+		scanf("%d", &num_of_vectors);
+	}while(num_of_vectors <= 0);
+	
+	double i[num_of_vectors], j[num_of_vectors];
+	
+	for (int count = 0; count < num_of_vectors; count++){
 		
-		condition = 0;
-		switch (input){
-		case 1:
-			puts("Enter i component:");
-			scanf("%lf", &i2);
-			puts("Enter j components:");
-			scanf("%lf", &j2);
-			break;
-		case 2:
-			puts("Enter magnitude:");
-			scanf("%lf", &mag2);
-			puts("Enter Angle in degrees:");
-			scanf("%lf", &angle2);
-			i2 = x_component_2D(mag2, angle2);
-			j2 = y_component_2D(mag2, angle2);
-			break;
-		default:
-			puts("Try again.");
-			condition = 1;
-			break;
-		}
-	} while (condition != 0);
-
-	double total_i = i1 + i2;
-	double total_j = j1 + j2;
+		I = &i[count];
+		J = &j[count];
+		
+		get_two_dimensional_vector(I, J, count+1);
+	}
+	
+	double total_i = array_sum(i, num_of_vectors);
+	double total_j = array_sum(j, num_of_vectors);
 	
 	printf("The Resulting vector is %.2f i + %.2f j\n", total_i, total_j);
 	printf("The Magnitude is %.2f with an angle of %.2f degrees\n", 
 		magnitude_mag(total_i, total_j, 0), magnitude_angle(total_i, total_j));
+	
 }
 
 /*
@@ -390,22 +318,30 @@ void two_dimensional_vector_addition(void)
 
 void three_dimensional_vector_addition(void)
 {
-	double i1, i2, j1, j2, k1, k2;
 
-	double *I1, *I2, *J1, *J2, *K1, *K2;
+	int num_of_vectors;
+
+	double *I, *J, *K;
 	
-	I1 = &i1;
-	I2 = &i2;
-	J1 = &j1;
-	J2 = &j2;
-	K1 = &k1;
-	K2 = &k2;
+	puts("How many vectors are there?");
+	do {
+		scanf("%d", &num_of_vectors);
+	}while(num_of_vectors <= 0);
 	
-	get_three_dimensional_vector(I1, I2, J1, J2, K1, K2);
+	double i[num_of_vectors], j[num_of_vectors], k[num_of_vectors];
 	
-	double total_i = i1 + i2;
-	double total_j = j1 + j2;
-	double total_k = k1 + k2;
+	for (int count = 0; count < num_of_vectors; count++){
+		
+		I = &i[count];
+		J = &j[count];
+		K = &k[count];
+		
+		get_three_dimensional_vector(I, J, K, count+1);
+	}
+	
+	double total_i = array_sum(i, num_of_vectors);
+	double total_j = array_sum(j, num_of_vectors);
+	double total_k = array_sum(k, num_of_vectors);
 	
 	output_result_vector(total_i, total_j, total_k);
 	
@@ -426,7 +362,8 @@ void cross_product(void)
 	K1 = &k1;
 	K2 = &k2;
 	
-	get_three_dimensional_vector(I1, I2, J1, J2, K1, K2);
+	get_three_dimensional_vector(I1, J1, K1, 1);
+	get_three_dimensional_vector(I2, J2, K2, 2);
 	
 	double total_i = (j1 * k2) - (k1 * j2);
 	double total_j = (k1 * i2) - (i1 * k2);
@@ -452,7 +389,8 @@ void dot_product(void)
 	K1 = &k1;
 	K2 = &k2;
 	
-	get_three_dimensional_vector(I1, I2, J1, J2, K1, K2);
+	get_three_dimensional_vector(I1, J1, K1, 1);
+	get_three_dimensional_vector(I2, J2, K2, 2);
 	
 	double result = i1 * i2 + j1 * j2 + k1 * k2;
 	
@@ -517,7 +455,8 @@ void force_along_line(void)
 	puts("Enter the magnitude of the Force:");
 	scanf("%lf", &force);
 	
-	get_three_dimensional_force_vector(X1, X2, Y1, Y2, Z1, Z2);
+	get_three_dimensional_coordinate(X1, Y1, Z1, 1);
+	get_three_dimensional_coordinate(X2, Y2, Z2, 2);
 	
 	double total_x = x2 - x1;
 	double total_y = y2 - y1;
@@ -607,6 +546,7 @@ void force_operations(void)
  */
 
 int main(void){
+
 	int input, condition;
 	
 	do {
@@ -632,7 +572,6 @@ int main(void){
 		}
 	}while (condition != 0);
 	
-
+	
 	return EXIT_SUCCESS;
 }
-
