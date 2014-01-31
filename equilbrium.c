@@ -4,6 +4,7 @@
 
 #define PI 3.14159265358979323846
 
+
 /* Converts a angle in degrees to radians */
 double deg_rad(double deg)
 {
@@ -695,6 +696,7 @@ double torque_vector_2D(void)
 void torque_2D(void)
 {
 	 int option, condition;
+	 double result;
 	 
 	 do {
 		 condition = 0;
@@ -704,10 +706,12 @@ void torque_2D(void)
 		 scanf("%d", &option);
 		 switch (option){
 			 case 1:
-					 torque_magnitude();
+					 result = torque_magnitude();
+					 printf("The magnitude is: %.2f\n", result);
 					 break;
 			 case 2:
-					 torque_vector_2D();
+					 result = torque_vector_2D();
+					 output_result_vector(0, 0, result);
 					 break;
 			 default:
 					 condition = 1;
