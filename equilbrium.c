@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define PI 3.14159265358979323846
+/* Gimmie some globals */
+
+const double PI = 3.14159265358979323846;
 
 
 /* Converts a angle in degrees to radians */
