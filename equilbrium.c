@@ -2,18 +2,18 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define M_PI 3.14159265358979323846
+#define PI 3.14159265358979323846
 
 /* Converts a angle in degrees to radians */
 double deg_rad(double deg)
 {
-	return deg * M_PI / 180.0;
+	return deg * PI / 180.0;
 }
 
 /* Converts a angle in radians to degrees */
 double rad_deg(double rad)
 {
-	return rad * 180.0 / M_PI;
+	return rad * 180.0 / PI;
 }
 
 /* Returns the product of the array elements */
