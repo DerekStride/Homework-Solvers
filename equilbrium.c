@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <math.h>
 
+#define M_PI 3.14159265358979323846
+
 /* Converts a angle in degrees to radians */
 double deg_rad(double deg)
 {
