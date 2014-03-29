@@ -5,9 +5,9 @@ class vector(object):
     Represents a three dimension vector in it's i, j, and k components.
     """
     def __init__(self, i, j, k):
-        self.i = i
-        self.j = j
-        self.k = k
+        self.i = float(i)
+        self.j = float(j)
+        self.k = float(k)
 
     def __repr__(self):
         return self.__str__()
