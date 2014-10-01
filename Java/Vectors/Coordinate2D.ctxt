@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.params=x\ y
+comment0.target=Coordinate2D(double,\ double)
+comment0.text=\r\n\ Creates\ the\ coordinate\ and\ initializes\ polar\ and\ cartisian\ values.\r\n
+comment1.params=
+comment1.target=double\ getX()
+comment2.params=
+comment2.target=double\ getY()
+comment3.params=
+comment3.target=double\ getR()
+comment4.params=
+comment4.target=double\ getTheta()
+numComments=5
