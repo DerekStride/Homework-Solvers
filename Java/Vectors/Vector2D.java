@@ -15,7 +15,7 @@ public class Vector2D{
      */
     public Vector2D(double magnitude, double horizontalAngle){
         this.x = magnitude * Math.cos(Math.toRadians(horizontalAngle));
-        this.x = magnitude * Math.sin(Math.toRadians(horizontalAngle));
+        this.y = magnitude * Math.sin(Math.toRadians(horizontalAngle));
         this.magnitude = magnitude;
         this.angle = horizontalAngle;
     }

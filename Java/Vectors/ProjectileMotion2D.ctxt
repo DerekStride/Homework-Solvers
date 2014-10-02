@@ -1,5 +1,7 @@
 #BlueJ class context
-comment0.params=
-comment0.target=ProjectileMotion2D()
+comment0.params=initialVector
+comment0.target=ProjectileMotion2D(Vector2D)
 comment0.text=\r\n\ Sets\ up\ the\ problem.\r\n
-numComments=1
+comment1.params=
+comment1.target=Coordinate2D\ findMaxPoint()
+numComments=2
