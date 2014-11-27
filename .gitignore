@@ -1,0 +1,6 @@
+*.jar
+*.class
+*.o
+*a.out
+*.ctxt
+*.bluej
