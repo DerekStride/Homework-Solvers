@@ -4,3 +4,4 @@
 *a.out
 *.ctxt
 *.bluej
+*__pycache__
