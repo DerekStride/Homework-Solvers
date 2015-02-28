@@ -1,5 +1,6 @@
 ### Introduction
 
+Here's how to compile and run all the versions of this project. If you can even run them out of the box.
 
 ### C
 
@@ -26,7 +27,7 @@ javac Vector.java Vector2D.java Vector3D.java Coordinate2D.java ProjectileMotion
 
 ### Python
 
-This should be sufficent to run the python version. There's a gui in this one :D
+This should be sufficient to run the python version. There's a gui in this one :D
 
 ```python
 
